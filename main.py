@@ -55,6 +55,7 @@ def apply_operation(operation):
     global NEW_VALUE
     global OLD_VALUE
     global OPERATION
+    global DISPLAY_VALUE
     temp = NEW_VALUE
     if OPERATION == '+':
         NEW_VALUE += OLD_VALUE
@@ -72,6 +73,13 @@ def apply_operation(operation):
 
 #the callback function when the clear button is pressed
 def clear():
+    global NEW_VALUE
+    global OLD_VALUE
+    global DISPLAY_VALUE
+    global OPERATION
+    if NEW_VALUE == 0:
+        OLD_VALUE = 0
+        OPERATION = '+'
     NEW_VALUE = 0
     DISPLAY_VALUE.set(NEW_VALUE)
 

@@ -5,13 +5,14 @@ Docs go here!
 import tkinter as tk
 from tkinter import ttk, N,W, E, S
 
-
+#Global variables that the calculator must hold in memory
 OLD_VALUE = 0
 NEW_VALUE = 0
 OPERATION = '+'
 LAST_BUTTON = '+'
 
-
+#A helper function whenever a button is pressed
+#routes 'number' and 'operation' buttons to their respective callback functions
 def route_button(value, type_):
     global NEW_VALUE
     global OLD_VALUE
@@ -24,6 +25,7 @@ def route_button(value, type_):
     print(NEW_VALUE, OLD_VALUE, OPERATION)
     LAST_BUTTON = value
 
+#the callback function when a number button is pressed
 def press_number(number):
     global NEW_VALUE
     global OLD_VALUE
@@ -48,7 +50,7 @@ def press_number(number):
             disp = str(NEW_VALUE)
     DISPLAY_VALUE.set(disp)
 
-
+#the callback function when an operation button is pressed
 def apply_operation(operation):
     global NEW_VALUE
     global OLD_VALUE
@@ -97,19 +99,20 @@ display.grid(column = 0, row = 0)
 buttonframe = tk.Frame(mainframe)
 buttonframe.grid(column=0, row=1)
 
-buttons = [
-    ['1', '2', '3', '/'],
-    ['4', '5', '6', 'x'],
-    ['7', '8', '9', '-'],
-    ['0', '.', '=', '+']
-]
-
+#the list of numbers 0-9 plus the decimal in the order they'll
+#appear on the calculator
 numbers = [str(i) for i in range(1, 10)] + ['0', '.']
 
-
+#the mathematical operations the calculator can perform
 operations = ['/', 'x', '-', '+', '=']
 
+#buttons is a dictionary containing all the buttons
+#I'm building it in a dictionary via looping over the numbers buttons
+#and operations buttons. I'm looping because adding each button explicitly
+#is too redundant and there's a lot of overlap
 buttons = dict()
+
+#Add the numbers buttons first
 row = 0
 col = 0
 for number in numbers:
@@ -124,6 +127,7 @@ for number in numbers:
         col = 0
         row += 1
 
+#now add the operations buttons
 row = 0
 col = 3
 for operation in operations:
@@ -138,7 +142,8 @@ for operation in operations:
     }
     row += 1
 
-
+#for each entry in the button dict, create a Button object that goes in
+#the buttonframe. Give appropriate label, location, and callback function
 for key in buttons:
     button = buttons[key]
     row = button['row']
@@ -151,19 +156,7 @@ for key in buttons:
         command = lambda key=key: route_button(buttons[key]['value'], buttons[key]['type']))
     button['button'].grid(column = col, row = row, sticky = (N, S, E, W))
 
-
-
-# text = tk.Text(mainframe, width=75, height = 20)
-# text.grid(column=2, row=1, sticky=(W, E))
-#
-# filename_entry = ttk.Entry(mainframe, width = 5, textvariable = filename)
-# filename_entry.grid(column = 2, row = 2)
-#
-# ttk.Label(mainframe).grid(column=1, row=2, sticky=(W, E))
-# ttk.Button(mainframe, text="Save", command=save).grid(column=3, row=3, sticky=W)
-# ttk.Checkbutton(mainframe, text='yay text!', onvalue = 'foo', offvalue = 'bar').grid(column = 3, row = 4)
-
-
+#Give a little padding to each child
 for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
 
 

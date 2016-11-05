@@ -70,6 +70,10 @@ def apply_operation(operation):
     OPERATION = operation
     DISPLAY_VALUE.set(NEW_VALUE)
 
+#the callback function when the clear button is pressed
+def clear():
+    NEW_VALUE = 0
+    DISPLAY_VALUE.set(NEW_VALUE)
 
 
 root = tk.Tk()
@@ -155,6 +159,9 @@ for key in buttons:
         text = value,
         command = lambda key=key: route_button(buttons[key]['value'], buttons[key]['type']))
     button['button'].grid(column = col, row = row, sticky = (N, S, E, W))
+
+#add a "clear" button
+tk.Button(buttonframe, text = 'C', command = clear).grid(column = 0, row = 4, sticky = (N, S, E, W), columnspan = 4)
 
 #Give a little padding to each child
 for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
